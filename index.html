@@ -1,0 +1,1112 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Scudeletti srl</title>
+<meta name="theme-color" content="#1f2a44">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Scudeletti">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--navy:#1f2a44;--navy2:#2b3a5e;--gold:#c9a24b;--goldl:#f3ead2;--bg:#f3f4f7;--card:#fff;--line:#e0e3ea;--txt:#18202f;--mut:#667085;--ok:#2e9e5b;--okl:#e3f4ea;--warn:#d9820b;--warnl:#fdf0dc;--bad:#d64545;--badl:#fbe4e4;--info:#2f6fd0;--infol:#e4edfb}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+body{min-height:100vh;overscroll-behavior-y:none}
+button{font:inherit;color:inherit;cursor:pointer}
+input,textarea,select{font:inherit;color:var(--txt);width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(31,42,68,.12)}
+textarea{resize:vertical}
+.ico{display:inline-flex;vertical-align:middle;flex:none}
+#splash{position:fixed;inset:0;z-index:100;background:var(--navy);display:flex;align-items:center;justify-content:center;transition:opacity .4s}
+#splash img{width:120px;height:120px;border-radius:26px}
+#splash.out{opacity:0;pointer-events:none}
+.hdr{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top,0px) + 8px) 12px 8px;min-height:56px}
+.hdr .logo{width:34px;height:34px;object-fit:contain}
+.hdr .ttl{flex:1;font-size:18px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hr{display:flex;gap:2px}
+.gold{height:3px;background:var(--gold)}
+.ib{width:44px;height:44px;border:0;background:transparent;color:inherit;border-radius:12px;display:inline-flex;align-items:center;justify-content:center}
+.ib:active{background:rgba(255,255,255,.14)}
+.ib.light{color:#fff}
+.main .ib{color:var(--mut)}
+.main .ib:active{background:#eceef3}
+.spin .ico{animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.main{padding:14px 14px 20px;max-width:640px;margin:0 auto}
+.sp{height:96px}
+.lbl{margin:18px 0 8px;font-size:14px;font-weight:600;color:var(--navy)}
+.hint{margin:6px 2px 0;font-size:13px;color:var(--mut)}
+.dim{color:var(--mut)}
+.empty{text-align:center;color:var(--mut);padding:28px 12px}
+.empty.small{padding:10px 0;text-align:left}
+.err{color:var(--bad);font-size:14px;min-height:20px;margin:6px 0}
+.stor{display:block;width:100%;text-align:left;border:0;border-radius:12px;padding:10px 12px;margin-bottom:10px}
+.stor .srow{display:flex;justify-content:space-between;font-size:14px;font-weight:600}
+.stor .track{height:7px;border-radius:4px;background:rgba(255,255,255,.75);margin-top:7px;overflow:hidden}
+.stor .track i{display:block;height:100%;border-radius:4px}
+.stor.grn{background:var(--okl);color:#17653a}.stor.grn i{background:var(--ok)}
+.stor.amb{background:var(--warnl);color:#8a5200}.stor.amb i{background:var(--warn)}
+.stor.red{background:var(--badl);color:#8f2222}.stor.red i{background:var(--bad)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.chips:empty{display:none}
+.chip{font-size:13px;padding:5px 10px;border-radius:10px;background:#eceef3;color:var(--mut)}
+.chip.warn{background:var(--warnl);color:#8a5200}
+.chip.err{background:var(--badl);color:#8f2222}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#e6e8ee;border-radius:14px;padding:4px;margin-bottom:10px}
+.seg button{border:0;background:transparent;border-radius:11px;padding:10px;font-weight:600;color:var(--mut);display:flex;align-items:center;justify-content:center;gap:6px}
+.seg button.on{background:#fff;color:var(--navy);box-shadow:inset 0 -3px 0 var(--gold)}
+.sbox{position:relative;margin-bottom:6px}
+.sbox .ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--mut)}
+.sbox input{padding-left:42px;height:52px;font-size:18px;border-radius:14px}
+input.big{letter-spacing:.04em}
+.row{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px 12px;margin-bottom:8px}
+.row:active{background:#f7f8fa}
+.thumbi{width:42px;height:42px;border-radius:11px;background:#eceef3;color:var(--navy);display:flex;align-items:center;justify-content:center;flex:none}
+.thumbi.warn{background:var(--warnl);color:var(--warn)}
+.grow{flex:1;min-width:0}
+.row .t{font-weight:600}
+.row .s{font-size:13px;color:var(--mut)}
+.vin{font-size:16px;letter-spacing:.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vin b{color:var(--navy);font-weight:800;background:var(--goldl);border-radius:5px;padding:0 3px;margin-left:1px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--warn);flex:none}
+.st{font-size:12px;font-weight:600;padding:4px 9px;border-radius:9px;white-space:nowrap}
+.st-arrivata{background:var(--infol);color:#1d4f9e}
+.st-in-lavorazione{background:var(--warnl);color:#8a5200}
+.st-pronta{background:var(--okl);color:#17653a}
+.st-consegnata{background:#eceef3;color:var(--mut)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 16px;border-radius:13px;border:1px solid var(--line);background:#fff;font-weight:600;color:var(--navy)}
+.btn:active{filter:brightness(.95)}
+.btn.full{width:100%;margin-top:8px}
+.btn.lg{min-height:54px;font-size:17px}
+.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.danger{color:var(--bad);border-color:#efc3c3}
+.btn.danger.solid{background:var(--bad);border-color:var(--bad);color:#fff}
+.btn.light{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3);color:#fff}
+.btn.danger.light{color:#ffb3b3}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:15;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--line)}
+.dock .btn{margin:0 auto;max-width:640px;display:flex}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.vinbig{font-size:19px;font-weight:700;letter-spacing:.04em;word-break:break-all;color:var(--navy)}
+.strow{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:10px 0}
+.stb{border:0;background:transparent;padding:0;display:flex;align-items:center;gap:8px}
+.meta{font-size:14px;color:var(--mut);display:grid;gap:3px}
+.meta .note{background:var(--goldl);color:var(--txt);border-radius:10px;padding:8px 10px;margin-top:6px;white-space:pre-wrap}
+.lnk{color:var(--info);font-weight:600}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid:empty{display:none}
+.ph{position:relative;border:0;padding:0;border-radius:13px;overflow:hidden;background:#dfe2ea;aspect-ratio:4/3}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph .phl{position:absolute;left:6px;bottom:6px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;padding:2px 8px;border-radius:8px}
+.ph .phd{position:absolute;right:7px;top:7px;width:10px;height:10px;border-radius:50%;background:var(--warn);border:2px solid #fff}
+.ph.off{display:flex;align-items:center;justify-content:center}
+.phx{font-size:12px;color:var(--mut);padding:8px;text-align:center}
+.slot{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:100%;aspect-ratio:16/9;border:2px dashed #b9bfcc;border-radius:16px;background:#fff;color:var(--navy);font-weight:600;overflow:hidden;padding:0}
+.slot.has{border:1px solid var(--line)}
+.slot img{width:100%;height:100%;object-fit:cover}
+.slot .phl{position:absolute;right:8px;bottom:8px;left:auto;background:rgba(0,0,0,.6);color:#fff;font-size:13px;padding:3px 10px;border-radius:9px}
+.fld{display:block;margin-top:12px}
+.fld>span{display:block;font-size:14px;font-weight:600;color:var(--navy);margin-bottom:5px}
+.vinrow{position:relative}
+.vinin{font-size:19px;font-weight:700;letter-spacing:.05em;padding-right:58px}
+.cnt{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--mut)}
+.login{max-width:380px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 56px) 22px 30px;text-align:center}
+.login .biglogo{width:112px;height:112px;border-radius:26px;margin-bottom:14px}
+.login h1{margin:0;font-size:26px;color:var(--navy)}
+.login p{margin:4px 0 22px}
+.login input{margin-bottom:10px;text-align:left}
+.ov{position:fixed;inset:0;z-index:50;display:flex}
+.ovbg{position:absolute;inset:0;background:rgba(15,20,32,.5)}
+.ov.bottom{align-items:flex-end}
+.ov.center{align-items:center;justify-content:center;padding:20px}
+.ov.full{background:#000;flex-direction:column}
+.ov.full .ovbg{display:none}
+.sheet{position:relative;width:100%;max-width:640px;margin:0 auto;background:#fff;border-radius:20px 20px 0 0;padding:8px 12px calc(12px + env(safe-area-inset-bottom,0px));max-height:88vh;overflow:auto;animation:up .18s ease-out}
+.sheet.tall{padding-top:14px}
+@keyframes up{from{transform:translateY(30px);opacity:.4}}
+.sh-t{font-weight:700;color:var(--navy);padding:10px 6px 6px;font-size:17px;word-break:break-all}
+.sh-i{display:flex;align-items:center;gap:12px;width:100%;border:0;background:transparent;text-align:left;padding:14px 8px;font-size:17px;border-radius:12px}
+.sh-i:active{background:#f0f2f6}
+.sh-i.danger{color:var(--bad)}
+.sh-i.cancel{justify-content:center;color:var(--mut);margin-top:4px;border-top:1px solid var(--line);border-radius:0}
+.sheet textarea,.sheet .grid,.sheet .btn.full{margin-top:10px}
+.sheet .dbtn{margin-top:14px}
+.dlg{position:relative;width:100%;max-width:420px;background:#fff;border-radius:18px;padding:18px;animation:up .18s ease-out}
+.dlg h3{margin:0 0 6px;color:var(--navy);font-size:19px}
+.dlg p{margin:0 0 12px;white-space:pre-line;color:#3a4356;font-size:15px}
+.dlg input,.dlg textarea{margin-bottom:4px}
+.dbtn{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+.dbtn .btn{flex:1}
+.viewer{position:relative;display:flex;flex-direction:column;width:100%;height:100%;color:#fff}
+.vtop{display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top,0px) + 6px) 8px 6px 14px;font-size:15px}
+.vimg{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.vimg img{max-width:100%;max-height:100%;object-fit:contain}
+.vmsg{color:#cfd3dc}
+.vbar{display:flex;gap:8px;padding:10px 12px calc(12px + env(safe-area-inset-bottom,0px))}
+.vbar .btn{flex:1}
+#toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:#1b2233;color:#fff;padding:11px 16px;border-radius:12px;font-size:15px;opacity:0;pointer-events:none;transition:.25s;z-index:80;max-width:88vw;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+
+</style>
+</head>
+<body>
+<div id="splash"><img src="icon-512.png" alt="Scudeletti srl"></div>
+<div id="app"></div>
+<script>
+'use strict';
+const CFG = {
+  URL: 'https://sexgikgiiflpbmflckjw.supabase.co',
+  KEY: 'sb_publishable_IYJRJgQu8tLjZvBs6dlwKA_ZI1VQK-m',
+  BUCKET: 'car-photos',
+  QUOTA: 1000000000,
+  TRASH_DAYS: 7,
+  JSPDF: 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
+  TESS: 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js'
+};
+const STATI = ['arrivata', 'in lavorazione', 'pronta', 'consegnata'];
+const TABLES = ['bolle', 'cars', 'damages', 'photos'];
+const COLS = {
+  bolle: ['id', 'note', 'created_by', 'created_by_name', 'created_at', 'updated_by', 'updated_by_name', 'updated_at', 'deleted_at'],
+  cars: ['id', 'vin', 'status', 'note', 'ddt', 'bolla_id', 'created_by', 'created_by_name', 'created_at', 'updated_by', 'updated_by_name', 'updated_at', 'deleted_at'],
+  damages: ['id', 'car_id', 'note', 'created_by', 'created_by_name', 'created_at', 'updated_by', 'updated_by_name', 'updated_at'],
+  photos: ['id', 'car_id', 'damage_id', 'bolla_id', 'kind', 'path', 'size_bytes', 'created_by', 'created_at']
+};
+
+const $ = (s, r) => (r || document).querySelector(s);
+const pad = (n) => String(n).padStart(2, '0');
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16); }));
+function fmt(iso) { if (!iso) return ''; const d = new Date(iso); return pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+function fmtFile(iso) { const d = new Date(iso); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + '-' + pad(d.getMinutes()); }
+function mb(b) { return b >= 1e9 ? (b / 1e9).toFixed(2) + ' GB' : (b / 1e6).toFixed(b >= 1e7 ? 0 : 1) + ' MB'; }
+function pick(t, r) { const o = {}; for (const k of COLS[t]) o[k] = r[k] === undefined ? null : r[k]; return o; }
+
+function h(tag, a, ...kids) {
+  const e = document.createElement(tag);
+  if (a) for (const k in a) {
+    const v = a[k];
+    if (k === 'class') e.className = v;
+    else if (k === 'html') e.innerHTML = v;
+    else if (k.slice(0, 2) === 'on') e.addEventListener(k.slice(2), v);
+    else if (v === true) e.setAttribute(k, '');
+    else if (v !== false && v != null) e.setAttribute(k, v);
+  }
+  for (const c of kids.flat(Infinity)) {
+    if (c == null || c === false) continue;
+    e.append(c.nodeType ? c : document.createTextNode(c));
+  }
+  return e;
+}
+
+const ICONS = {
+  search: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  camera: '<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+  refresh: '<path d="M20 11a8 8 0 0 0-14-4M4 4v4h4M4 13a8 8 0 0 0 14 4M20 20v-4h-4"/>',
+  more: '<circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/>',
+  back: '<path d="M15 5l-7 7 7 7"/>',
+  alert: '<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17v.5"/>',
+  file: '<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/>',
+  car: '<path d="M3 16v-4l2-5h14l2 5v4z"/><path d="M5 16v3h3v-3M16 16v3h3v-3"/><circle cx="7.5" cy="13" r=".8"/><circle cx="16.5" cy="13" r=".8"/>',
+  trash: '<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',
+  edit: '<path d="M4 20h4L19 9l-4-4L4 16z"/>',
+  share: '<path d="M12 15V4M8 8l4-4 4 4M5 12v8h14v-8"/>',
+  check: '<path d="M5 12l5 5 9-10"/>',
+  x: '<path d="M6 6l12 12M18 6L6 18"/>',
+  open: '<path d="M5 12h14M13 6l6 6-6 6"/>'
+};
+function ico(n, size) {
+  const s = size || 20;
+  return h('span', { class: 'ico', html: '<svg viewBox="0 0 24 24" width="' + s + '" height="' + s + '" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICONS[n] + '</svg>' });
+}
+
+let toastT;
+function toast(msg) {
+  let t = $('#toast');
+  if (!t) { t = h('div', { id: 'toast' }); document.body.append(t); }
+  t.textContent = msg; t.classList.add('on');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2800);
+}
+
+/* ---------- archivio locale (IndexedDB) ---------- */
+const DB = { db: null };
+const rq = (r) => new Promise((res, rej) => { r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); });
+const store = (n, m) => DB.db.transaction(n, m || 'readonly').objectStore(n);
+const dbGet = (n, id) => rq(store(n).get(id));
+const dbAll = (n) => rq(store(n).getAll());
+const dbPut = (n, o) => rq(store(n, 'readwrite').put(o));
+const dbDel = (n, id) => rq(store(n, 'readwrite').delete(id));
+function dbOpen() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open('scudeletti', 1);
+    r.onupgradeneeded = () => { for (const s of ['cars', 'damages', 'photos', 'bolle', 'queue', 'pcache']) r.result.createObjectStore(s, { keyPath: 'id' }); };
+    r.onsuccess = () => { DB.db = r.result; res(); };
+    r.onerror = () => rej(r.error);
+  });
+}
+const S = { cars: [], damages: [], photos: [], bolle: [], queue: [] };
+async function loadAll() { for (const k of Object.keys(S)) S[k] = await dbAll(k); }
+async function reload(t) { S[t] = await dbAll(t); }
+
+/* ---------- accesso ---------- */
+let session = null;
+try { session = JSON.parse(localStorage.getItem('sess') || 'null'); } catch (e) { session = null; }
+const myName = () => ((session && session.email) || '').split('@')[0];
+async function authFetch(path, body) {
+  const r = await fetch(CFG.URL + path, { method: 'POST', headers: { apikey: CFG.KEY, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const j = await r.json().catch(() => ({}));
+  return { ok: r.ok, status: r.status, j };
+}
+function saveSession(j) {
+  session = { at: j.access_token, rt: j.refresh_token, exp: Date.now() + (j.expires_in || 3600) * 1000, uid: j.user.id, email: j.user.email };
+  localStorage.setItem('sess', JSON.stringify(session));
+}
+async function login(email, pw) {
+  const r = await authFetch('/auth/v1/token?grant_type=password', { email, password: pw });
+  if (!r.ok) throw new Error(r.status === 400 ? 'Email o password non corrette.' : (r.j.error_description || r.j.msg || 'Accesso non riuscito.'));
+  saveSession(r.j);
+}
+function logout(expired) {
+  session = null; localStorage.removeItem('sess');
+  view = { name: 'login', expired: !!expired }; render();
+}
+let refreshing = null;
+async function ensureToken() {
+  if (!session) throw new Error('Accesso richiesto.');
+  if (session.exp - Date.now() > 60000) return;
+  if (!refreshing) {
+    refreshing = (async () => {
+      const r = await authFetch('/auth/v1/token?grant_type=refresh_token', { refresh_token: session.rt });
+      if (r.ok) saveSession(r.j);
+      else if (r.status === 400 || r.status === 401 || r.status === 403) { logout(true); throw new Error('Sessione scaduta. Accedi di nuovo.'); }
+      else throw new Error('Rinnovo accesso non riuscito (' + r.status + ').');
+    })().finally(() => { refreshing = null; });
+  }
+  await refreshing;
+}
+async function api(path, o) {
+  o = o || {};
+  await ensureToken();
+  const hd = Object.assign({ apikey: CFG.KEY, Authorization: 'Bearer ' + session.at }, o.headers || {});
+  let body;
+  if (o.body instanceof Blob) body = o.body;
+  else if (o.body !== undefined) { body = JSON.stringify(o.body); hd['Content-Type'] = 'application/json'; }
+  const r = await fetch(CFG.URL + path, { method: o.method || 'GET', headers: hd, body });
+  if (!r.ok) { const t = await r.text().catch(() => ''); throw new Error(r.status + ' ' + t.slice(0, 160)); }
+  const txt = await r.text();
+  return txt ? JSON.parse(txt) : null;
+}
+
+/* ---------- salvataggio locale ---------- */
+function stamp(o, isNew) {
+  const now = new Date().toISOString();
+  if (isNew) { o.created_at = o.created_at || now; o.created_by = session.uid; o.created_by_name = myName(); }
+  else { o.updated_at = now; o.updated_by = session.uid; o.updated_by_name = myName(); }
+  o._dirty = 1; o._rev = (o._rev || 0) + 1;
+  return o;
+}
+async function save(t, o) { await dbPut(t, o); await reload(t); }
+async function removeLocal(t, r) {
+  if (t === 'photos') { await dbDel('pcache', r.id); await dbDel('photos', r.id); return; }
+  if (t === 'cars') {
+    for (const d of await dbAll('damages')) if (d.car_id === r.id) await dbDel('damages', d.id);
+    for (const p of await dbAll('photos')) if (p.car_id === r.id) await removeLocal('photos', p);
+  }
+  if (t === 'bolle') for (const p of await dbAll('photos')) if (p.bolla_id === r.id) await removeLocal('photos', p);
+  if (t === 'damages') for (const p of await dbAll('photos')) if (p.damage_id === r.id) await removeLocal('photos', p);
+  await dbDel(t, r.id);
+}
+async function queueDelete(table, rowId, paths) {
+  await dbPut('queue', { id: uid(), table, rowId, paths: paths || [] });
+  await reload('queue');
+}
+async function deletePhoto(p) {
+  await dbDel('pcache', p.id); await dbDel('photos', p.id);
+  if (p._up || !p._dirty) await queueDelete('photos', p.id, [p.path]);
+  await reload('photos'); sync();
+}
+async function deleteDamage(d) {
+  const ph = S.photos.filter((p) => p.damage_id === d.id);
+  for (const p of ph) { await dbDel('pcache', p.id); await dbDel('photos', p.id); }
+  await dbDel('damages', d.id);
+  await queueDelete('damages', d.id, ph.filter((p) => p._up || !p._dirty).map((p) => p.path));
+  await reload('photos'); await reload('damages'); sync();
+}
+async function addPhoto(blob, kind, parent) {
+  const p = { id: uid(), kind, size_bytes: blob.size, blob, _up: 0,
+    car_id: parent.car_id || null, damage_id: parent.damage_id || null, bolla_id: parent.bolla_id || null };
+  p.path = (p.car_id ? p.car_id : 'bolle/' + p.bolla_id) + '/' + p.id + '.jpg';
+  stamp(p, true);
+  await dbPut('photos', p); await reload('photos');
+  return p;
+}
+
+/* ---------- foto: scatto, compressione, lettura telaio ---------- */
+function pickPhoto() {
+  return new Promise((res) => {
+    const i = h('input', { type: 'file', accept: 'image/*', capture: 'environment', style: 'display:none' });
+    i.addEventListener('change', () => { res(i.files && i.files[0] ? i.files[0] : null); i.remove(); });
+    i.addEventListener('cancel', () => { res(null); i.remove(); });
+    document.body.append(i); i.click();
+  });
+}
+async function toCanvas(file, maxSide) {
+  let bmp;
+  try { bmp = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+  catch (e) {
+    bmp = await new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = URL.createObjectURL(file); });
+  }
+  const w0 = bmp.width, h0 = bmp.height, k = Math.min(1, maxSide / Math.max(w0, h0));
+  const c = document.createElement('canvas');
+  c.width = Math.round(w0 * k); c.height = Math.round(h0 * k);
+  c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+  return c;
+}
+function canvasBlob(c, withStamp) {
+  let src = c;
+  if (withStamp) {
+    src = document.createElement('canvas'); src.width = c.width; src.height = c.height;
+    const x = src.getContext('2d'); x.drawImage(c, 0, 0);
+    const fs = Math.max(16, Math.round(c.width / 48));
+    x.font = fs + 'px sans-serif';
+    const t = fmt(new Date().toISOString());
+    const tw = x.measureText(t).width;
+    x.fillStyle = 'rgba(0,0,0,.55)'; x.fillRect(0, c.height - fs * 1.7, tw + fs * 1.2, fs * 1.7);
+    x.fillStyle = '#fff'; x.fillText(t, fs * .6, c.height - fs * .5);
+  }
+  return new Promise((res) => src.toBlob(res, 'image/jpeg', 0.72));
+}
+async function prepPhoto(file) {
+  const c = await toCanvas(file, 1600);
+  return { canvas: c, blob: await canvasBlob(c, true) };
+}
+function loadScript(src) {
+  return new Promise((res, rej) => {
+    const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = () => rej(new Error('Libreria non disponibile (serve internet la prima volta).'));
+    document.head.append(s);
+  });
+}
+function pickVin(text) {
+  const lines = (text || '').toUpperCase().split(/\n/).map((s) => s.replace(/[^A-Z0-9]/g, ''));
+  const joined = lines.join('');
+  const re = /[A-HJ-NPR-Z0-9]{17}/;
+  for (const l of lines) { const m = l.match(re); if (m) return m[0]; }
+  const m2 = joined.match(re); if (m2) return m2[0];
+  const best = lines.sort((a, b) => b.length - a.length)[0] || '';
+  return best.length >= 9 ? best.slice(0, 17) : '';
+}
+async function readVin(canvas) {
+  if (!window.Tesseract) await loadScript(CFG.TESS);
+  const c = document.createElement('canvas'); c.width = canvas.width; c.height = canvas.height;
+  const x = c.getContext('2d'); x.filter = 'grayscale(1) contrast(1.6)'; x.drawImage(canvas, 0, 0);
+  const w = await Tesseract.createWorker('eng');
+  try {
+    await w.setParameters({ tessedit_char_whitelist: 'ABCDEFGHJKLMNPRSTUVWXYZ0123456789', tessedit_pageseg_mode: '11' });
+    const r = await Promise.race([w.recognize(c), new Promise((_, rej) => setTimeout(() => rej(new Error('tempo scaduto')), 60000))]);
+    return pickVin(r.data.text);
+  } finally { try { await w.terminate(); } catch (e) { /* niente */ } }
+}
+
+/* ---------- visualizzazione foto ---------- */
+const urlCache = new Map();
+async function photoBlob(p) {
+  if (p.blob) return p.blob;
+  const c = await dbGet('pcache', p.id); if (c) return c.blob;
+  if (!navigator.onLine) throw new Error('offline');
+  const j = await api('/storage/v1/object/sign/' + CFG.BUCKET + '/' + p.path, { method: 'POST', body: { expiresIn: 600 } });
+  const u = j.signedURL.indexOf('/storage/v1') === 0 ? j.signedURL : '/storage/v1' + j.signedURL;
+  const r = await fetch(CFG.URL + u);
+  if (!r.ok) throw new Error('foto ' + r.status);
+  const b = await r.blob();
+  await dbPut('pcache', { id: p.id, blob: b });
+  return b;
+}
+async function photoURL(p) {
+  if (urlCache.has(p.id)) return urlCache.get(p.id);
+  const u = URL.createObjectURL(await photoBlob(p));
+  urlCache.set(p.id, u);
+  return u;
+}
+function thumb(p, label, onTap) {
+  const img = h('img', { alt: label || '' });
+  const box = h('button', { class: 'ph', type: 'button', onclick: onTap }, img, label ? h('span', { class: 'phl' }, label) : null, p._dirty ? h('span', { class: 'phd', title: 'Da inviare' }) : null);
+  photoURL(p).then((u) => { img.src = u; }).catch(() => { box.classList.add('off'); box.prepend(h('span', { class: 'phx' }, 'Foto non disponibile offline')); });
+  return box;
+}
+
+/* ---------- sincronizzazione ---------- */
+const SYNC = { busy: false, err: '', last: 0 };
+const pending = () => S.queue.length + TABLES.reduce((n, t) => n + S[t].filter((r) => r._dirty).length, 0);
+async function pushAll() {
+  for (const q of S.queue.slice()) {
+    if (q.paths && q.paths.length) await api('/storage/v1/object/' + CFG.BUCKET, { method: 'DELETE', body: { prefixes: q.paths } });
+    await api('/rest/v1/' + q.table + '?id=eq.' + q.rowId, { method: 'DELETE' });
+    await dbDel('queue', q.id);
+  }
+  await reload('queue');
+  for (const t of ['bolle', 'cars', 'damages']) {
+    const rows = (await dbAll(t)).filter((r) => r._dirty);
+    if (!rows.length) continue;
+    await api('/rest/v1/' + t + '?on_conflict=id', { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' }, body: rows.map((r) => pick(t, r)) });
+    for (const r of rows) { const cur = await dbGet(t, r.id); if (cur && cur._rev === r._rev) { delete cur._dirty; await dbPut(t, cur); } }
+  }
+  for (const p of (await dbAll('photos')).filter((x) => x._dirty)) {
+    if (p.blob && !p._up) {
+      await api('/storage/v1/object/' + CFG.BUCKET + '/' + p.path, { method: 'POST', body: p.blob, headers: { 'Content-Type': 'image/jpeg', 'x-upsert': 'true' } });
+      const c1 = await dbGet('photos', p.id); if (c1) { c1._up = 1; await dbPut('photos', c1); }
+    }
+    await api('/rest/v1/photos?on_conflict=id', { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' }, body: [pick('photos', p)] });
+    const c2 = await dbGet('photos', p.id); if (c2 && c2._rev === p._rev) { delete c2._dirty; await dbPut('photos', c2); }
+  }
+}
+async function pullAll() {
+  for (const t of TABLES) {
+    let rows = [], off = 0;
+    for (;;) {
+      const part = await api('/rest/v1/' + t + '?select=*&order=created_at.asc&limit=1000&offset=' + off);
+      rows = rows.concat(part); if (part.length < 1000) break; off += 1000;
+    }
+    const ids = new Set(rows.map((r) => r.id));
+    for (const r of rows) {
+      const loc = await dbGet(t, r.id);
+      if (loc && loc._dirty) continue;
+      const n = Object.assign({}, r);
+      if (t === 'photos') { n._up = 1; if (loc && loc.blob) n.blob = loc.blob; }
+      await dbPut(t, n);
+    }
+    for (const loc of await dbAll(t)) {
+      if (ids.has(loc.id) || loc._dirty) continue;
+      if (t === 'photos' && !loc._up) continue;
+      await removeLocal(t, loc);
+    }
+  }
+}
+async function purgeOld() {
+  const lim = Date.now() - CFG.TRASH_DAYS * 864e5;
+  for (const t of ['cars', 'bolle']) {
+    for (const r of S[t].filter((x) => x.deleted_at && !x._dirty && new Date(x.deleted_at).getTime() < lim)) {
+      const paths = S.photos.filter((p) => (t === 'cars' ? p.car_id : p.bolla_id) === r.id).map((p) => p.path);
+      if (paths.length) await api('/storage/v1/object/' + CFG.BUCKET, { method: 'DELETE', body: { prefixes: paths } });
+      await api('/rest/v1/' + t + '?id=eq.' + r.id, { method: 'DELETE' });
+      await removeLocal(t, r);
+    }
+  }
+}
+let syncAgain = false;
+async function sync() {
+  if (!session) return;
+  if (SYNC.busy) { syncAgain = true; return; }
+  if (!navigator.onLine) { SYNC.err = ''; paintStatus(); return; }
+  SYNC.busy = true; SYNC.err = ''; paintStatus();
+  try {
+    await ensureToken();
+    await pushAll();
+    await pullAll();
+    await loadAll();
+    await purgeOld();
+    await loadAll();
+    SYNC.last = Date.now();
+  } catch (e) {
+    SYNC.err = String(e.message || e);
+    if (/Failed to fetch|NetworkError|Load failed/i.test(SYNC.err)) SYNC.err = 'Connessione assente o instabile.';
+  } finally {
+    SYNC.busy = false;
+    paintStatus(); refreshView();
+    if (syncAgain) { syncAgain = false; setTimeout(sync, 300); }
+  }
+}
+
+/* ---------- report PDF ---------- */
+function blobToDataURL(b) { return new Promise((res, rej) => { const f = new FileReader(); f.onload = () => res(f.result); f.onerror = rej; f.readAsDataURL(b); }); }
+async function imgSize(b) { const bm = await createImageBitmap(b); return { w: bm.width, h: bm.height }; }
+async function pdfPhotos(doc, photos, st) {
+  const W = 88, MAXH = 66;
+  let col = 0, rowH = 0;
+  for (const p of photos) {
+    let b = null;
+    try { b = await photoBlob(p); } catch (e) { b = null; }
+    let w = W, hh = 50, data = null;
+    if (b) {
+      const sz = await imgSize(b); hh = W * sz.h / sz.w; w = W;
+      if (hh > MAXH) { w = W * MAXH / hh; hh = MAXH; }
+      data = await blobToDataURL(b);
+    }
+    if (st.y + hh > 280) { doc.addPage(); st.y = 15; col = 0; rowH = 0; }
+    const x = 14 + col * (W + 6);
+    if (data) doc.addImage(data, 'JPEG', x, st.y, w, hh);
+    else { doc.setFontSize(9); doc.text('Foto non disponibile offline', x, st.y + 6); }
+    rowH = Math.max(rowH, hh);
+    col++;
+    if (col === 2) { st.y += rowH + 5; col = 0; rowH = 0; }
+  }
+  if (col === 1) st.y += rowH + 5;
+}
+async function buildPdf(title, lines, sections) {
+  if (!window.jspdf) await loadScript(CFG.JSPDF);
+  const doc = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
+  const st = { y: 15 };
+  try {
+    const lg = await (await fetch('logo-header.png')).blob();
+    doc.addImage(await blobToDataURL(lg), 'PNG', 14, 10, 14, 14);
+  } catch (e) { /* senza logo */ }
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(16); doc.setTextColor(31, 42, 68);
+  doc.text('Scudeletti srl', 32, 19);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(90);
+  doc.text(fmt(new Date().toISOString()), 196, 19, { align: 'right' });
+  doc.setDrawColor(201, 162, 75); doc.setLineWidth(0.6); doc.line(14, 27, 196, 27);
+  st.y = 37;
+  doc.setTextColor(20); doc.setFont('helvetica', 'bold'); doc.setFontSize(15); doc.text(title, 14, st.y); st.y += 8;
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
+  for (const l of lines) { const parts = doc.splitTextToSize(l, 180); doc.text(parts, 14, st.y); st.y += parts.length * 5; }
+  st.y += 3;
+  for (const s of sections) {
+    if (st.y > 265) { doc.addPage(); st.y = 15; }
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.setTextColor(31, 42, 68);
+    doc.text(s.heading, 14, st.y); st.y += 5;
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(20);
+    if (s.text) { const parts = doc.splitTextToSize(s.text, 180); doc.text(parts, 14, st.y); st.y += parts.length * 5 + 1; }
+    await pdfPhotos(doc, s.photos || [], st);
+    st.y += 3;
+  }
+  return doc;
+}
+function carLines(c) {
+  const b = c.bolla_id ? S.bolle.find((x) => x.id === c.bolla_id) : null;
+  return ['Telaio: ' + c.vin, 'Stato: ' + c.status, c.ddt ? 'DDT / bisarca: ' + c.ddt : null, b ? 'Bolla: ' + bollaName(b) : null,
+    'Scaricata il ' + fmt(c.created_at) + (c.created_by_name ? ' da ' + c.created_by_name : ''), c.note ? 'Note: ' + c.note : null].filter(Boolean);
+}
+async function carReportDoc(c) {
+  const ph = S.photos.filter((p) => p.car_id === c.id && !p.damage_id);
+  const secs = [{ heading: 'Foto', photos: ph.sort((a, b) => (a.kind === 'telaio' ? -1 : 1)) }];
+  const dm = S.damages.filter((d) => d.car_id === c.id).sort((a, b) => a.created_at < b.created_at ? -1 : 1);
+  if (!dm.length) secs.push({ heading: 'Danni', text: 'Nessun danno segnalato.' });
+  dm.forEach((d, i) => secs.push({ heading: 'Danno ' + (i + 1) + ' (' + fmt(d.created_at) + ')', text: d.note || '', photos: S.photos.filter((p) => p.damage_id === d.id) }));
+  return buildPdf('Scheda auto', carLines(c), secs);
+}
+async function bollaReportDoc(b) {
+  const cars = S.cars.filter((c) => c.bolla_id === b.id && !c.deleted_at);
+  const lines = ['Data: ' + fmt(b.created_at), b.note ? 'Note: ' + b.note : null, cars.length ? 'Auto collegate: ' + cars.map((c) => c.vin).join(', ') : null].filter(Boolean);
+  return buildPdf(bollaName(b), lines, [{ heading: 'Foto bolla', photos: S.photos.filter((p) => p.bolla_id === b.id) }]);
+}
+function bollaName(b) { return b.numero ? 'Bolla n. ' + b.numero : 'Bolla in attesa'; }
+function bollaFile(b) { return (b.numero ? 'Bolla n. ' + b.numero : 'Bolla') + ' - ' + fmtFile(b.created_at) + '.pdf'; }
+
+/* ---------- navigazione e finestre ---------- */
+let view = { name: 'home' };
+let homeTab = 'auto';
+let homeQ = '';
+let draft = null;
+let warned = false;
+const app = () => $('#app');
+
+function go(v) { history.pushState(v, ''); view = v; closeAll(); render(); window.scrollTo(0, 0); }
+function back() { if (history.length > 1) history.back(); else { view = { name: 'home' }; render(); } }
+window.addEventListener('popstate', (e) => { view = e.state || { name: 'home' }; closeAll(); render(); });
+function closeAll() { document.querySelectorAll('.ov').forEach((o) => o.remove()); }
+
+function overlay(content, cls, onBg) {
+  const o = h('div', { class: 'ov ' + (cls || '') });
+  const bg = h('div', { class: 'ovbg', onclick: () => { if (onBg) onBg(); else o.remove(); } });
+  o.append(bg, content);
+  o.close = () => o.remove();
+  document.body.append(o);
+  return o;
+}
+function sheet(title, items) {
+  const o = overlay(h('div', { class: 'sheet' },
+    title ? h('div', { class: 'sh-t' }, title) : null,
+    items.map((it) => h('button', { class: 'sh-i' + (it.danger ? ' danger' : ''), type: 'button', onclick: () => { o.close(); it.fn(); } }, it.icon ? ico(it.icon) : null, it.label)),
+    h('button', { class: 'sh-i cancel', type: 'button', onclick: () => o.close() }, 'Annulla')), 'bottom');
+  return o;
+}
+function dialog(a) {
+  return new Promise((res) => {
+    let inp = null;
+    const err = h('div', { class: 'err' });
+    if (a.input) inp = a.textarea ? h('textarea', { rows: 4 }) : h('input', { type: 'text', autocapitalize: a.caps ? 'characters' : 'sentences', autocomplete: 'off', placeholder: a.placeholder || '' });
+    if (inp && a.value) inp.value = a.value;
+    let o;
+    const done = (ok) => { o.close(); res({ ok, value: inp ? inp.value : '' }); };
+    const box = h('div', { class: 'dlg' },
+      h('h3', null, a.title), a.text ? h('p', null, a.text) : null, inp, err,
+      (a.extra || []).map((x) => h('button', { class: 'btn full', type: 'button', onclick: () => x.fn(o) }, x.label)),
+      h('div', { class: 'dbtn' },
+        h('button', { class: 'btn', type: 'button', onclick: () => done(false) }, a.cancel || 'Annulla'),
+        a.ok ? h('button', { class: 'btn ' + (a.danger ? 'danger solid' : 'primary'), type: 'button', onclick: () => {
+          if (a.validate && !a.validate(inp ? inp.value : '')) { err.textContent = a.invalid || 'Non corrisponde.'; return; }
+          done(true);
+        } }, a.ok) : null));
+    o = overlay(box, 'center', () => done(false));
+  });
+}
+function labelKind(p) { return p.kind === 'telaio' ? 'Telaio' : p.kind === 'generale' ? 'Auto' : p.kind === 'danno' ? 'Danno' : 'Bolla'; }
+function viewer(p) {
+  const img = h('img', { alt: '' });
+  photoURL(p).then((u) => { img.src = u; }).catch(() => { img.replaceWith(h('p', { class: 'vmsg' }, 'Foto non disponibile offline.')); });
+  const par = { car_id: p.car_id, damage_id: p.damage_id, bolla_id: p.bolla_id };
+  let o;
+  o = overlay(h('div', { class: 'viewer' },
+    h('div', { class: 'vtop' }, h('span', null, labelKind(p) + ' · ' + fmt(p.created_at)), h('button', { class: 'ib light', type: 'button', 'aria-label': 'Chiudi', onclick: () => o.close() }, ico('x'))),
+    h('div', { class: 'vimg' }, img),
+    h('div', { class: 'vbar' },
+      h('button', { class: 'btn light', type: 'button', onclick: async () => {
+        o.close(); const f = await pickPhoto(); if (!f) return;
+        try { const pr = await prepPhoto(f); await addPhoto(pr.blob, p.kind, par); await deletePhoto(p); refreshView(); toast('Foto sostituita'); } catch (e) { toast('Sostituzione non riuscita'); }
+      } }, 'Sostituisci'),
+      h('button', { class: 'btn danger light', type: 'button', onclick: async () => {
+        const r = await dialog({ title: 'Elimina foto', text: 'La foto viene tolta anche dall\'archivio online.', ok: 'Elimina', danger: true });
+        if (r.ok) { o.close(); await deletePhoto(p); refreshView(); }
+      } }, 'Elimina foto'))), 'full');
+}
+function longpress(el, fn) {
+  let t = null;
+  el.addEventListener('touchstart', () => { t = setTimeout(() => { t = null; fn(); }, 550); }, { passive: true });
+  ['touchend', 'touchmove', 'touchcancel'].forEach((ev) => el.addEventListener(ev, () => { if (t) { clearTimeout(t); t = null; } }, { passive: true }));
+  el.addEventListener('contextmenu', (e) => { e.preventDefault(); fn(); });
+}
+
+/* ---------- parti comuni ---------- */
+function chip(text, kind) { return h('span', { class: 'chip ' + (kind || '') }, text); }
+function statoChip(s) { return h('span', { class: 'st st-' + s.replace(' ', '-') }, s); }
+function statusEl() {
+  const n = pending(), chips = [];
+  if (!navigator.onLine) chips.push(chip('Offline: salvo sul telefono', 'warn'));
+  if (SYNC.err && navigator.onLine) chips.push(chip('Errore: ' + SYNC.err, 'err'));
+  if (n) chips.push(chip(n + (n === 1 ? ' elemento da sincronizzare' : ' elementi da sincronizzare'), 'warn'));
+  return h('div', { id: 'status', class: 'chips' }, chips);
+}
+function paintStatus() {
+  const s = $('#status'); if (s) s.replaceWith(statusEl());
+  const b = $('#syncbtn'); if (b) b.classList.toggle('spin', SYNC.busy);
+}
+function header(o) {
+  return h('header', { class: 'hdr' },
+    o.back ? h('button', { class: 'ib', type: 'button', 'aria-label': 'Indietro', onclick: back }, ico('back')) : h('img', { class: 'logo', src: 'logo-header.png', alt: '' }),
+    h('div', { class: 'ttl' }, o.title || 'Scudeletti srl'), o.right || null);
+}
+function menuBtn(fn) { return h('button', { class: 'ib', type: 'button', 'aria-label': 'Menu', onclick: fn }, ico('more')); }
+function usedBytes() { return S.photos.reduce((n, p) => n + (p.size_bytes || 0), 0); }
+function storageBar() {
+  const used = usedBytes(), pct = Math.min(100, Math.round(used / CFG.QUOTA * 100));
+  const cls = pct > 80 ? 'red' : pct > 60 ? 'amb' : 'grn';
+  return h('button', { class: 'stor ' + cls, id: 'stor', type: 'button', onclick: storageInfo },
+    h('div', { class: 'srow' }, h('span', null, 'Liberi ' + mb(Math.max(0, CFG.QUOTA - used)) + ' su 1 GB'), h('span', null, pct + '% usato')),
+    h('div', { class: 'track' }, h('i', { style: 'width:' + pct + '%' })));
+}
+async function storageInfo() {
+  const used = usedBytes();
+  let tel = '';
+  try { if (navigator.storage && navigator.storage.estimate) { const e = await navigator.storage.estimate(); tel = '\nSpazio usato dall\'app sul telefono: ' + mb(e.usage || 0) + (e.quota ? ' (disponibile ' + mb(e.quota) + ')' : ''); } } catch (e) { /* niente */ }
+  dialog({ title: 'Spazio archivio online', text: 'Auto in archivio: ' + S.cars.filter((c) => !c.deleted_at).length + '\nBolle: ' + S.bolle.filter((b) => !b.deleted_at).length + '\nFoto: ' + S.photos.length + ' (' + mb(used) + ')\nNel cestino: ' + (S.cars.filter((c) => c.deleted_at).length + S.bolle.filter((b) => b.deleted_at).length) + tel, cancel: 'Chiudi' });
+}
+function refreshView() {
+  if (!session) return;
+  if (view.name === 'home') { const st = $('#stor'); if (st) st.replaceWith(storageBar()); renderList(); }
+  else if (['car', 'bolla', 'trash'].includes(view.name)) render();
+}
+
+/* ---------- schermata di accesso ---------- */
+function loginScreen() {
+  const err = h('div', { class: 'err' }, view.expired ? 'La sessione è scaduta. Accedi di nuovo.' : '');
+  const em = h('input', { type: 'email', autocomplete: 'username', autocapitalize: 'none', placeholder: 'Email' });
+  const pw = h('input', { type: 'password', autocomplete: 'current-password', placeholder: 'Password' });
+  const go2 = async () => {
+    err.textContent = '';
+    if (!navigator.onLine) { err.textContent = 'Serve internet per il primo accesso.'; return; }
+    try { await login(em.value.trim(), pw.value); view = { name: 'home' }; history.replaceState(view, ''); await loadAll(); render(); sync(); }
+    catch (e) { err.textContent = /Failed to fetch|Load failed|NetworkError/i.test(e.message) ? 'Connessione assente.' : e.message; }
+  };
+  pw.addEventListener('keydown', (e) => { if (e.key === 'Enter') go2(); });
+  return h('main', { class: 'login' }, h('img', { src: 'icon-192.png', class: 'biglogo', alt: '' }), h('h1', null, 'Scudeletti srl'), h('p', { class: 'dim' }, 'Scarico auto e bolle'),
+    em, pw, err, h('button', { class: 'btn primary full', type: 'button', onclick: go2 }, 'Accedi'));
+}
+
+/* ---------- home ---------- */
+function homeMenu() {
+  sheet(myName() || 'Menu', [
+    { label: 'Sincronizza ora', icon: 'refresh', fn: () => { sync(); toast('Sincronizzo…'); } },
+    { label: 'Cestino', icon: 'trash', fn: () => go({ name: 'trash' }) },
+    { label: 'Spazio e archivio', icon: 'file', fn: storageInfo },
+    { label: 'Esci', icon: 'x', fn: async () => {
+      const n = pending();
+      const r = await dialog({ title: 'Esci', text: n ? 'Ci sono ' + n + ' elementi non ancora inviati: restano sul telefono, ma conviene sincronizzare prima.' : 'Dovrai rifare l\'accesso.', ok: 'Esci', danger: true });
+      if (r.ok) logout(false);
+    } }
+  ]);
+}
+function homeScreen() {
+  const syncBtn = h('button', { id: 'syncbtn', class: 'ib' + (SYNC.busy ? ' spin' : ''), type: 'button', 'aria-label': 'Sincronizza', onclick: () => { sync(); toast(navigator.onLine ? 'Sincronizzo…' : 'Sei offline'); } }, ico('refresh'));
+  const hdr = header({ right: h('div', { class: 'hr' }, syncBtn, menuBtn(homeMenu)) });
+  const seg = h('div', { class: 'seg' },
+    h('button', { type: 'button', class: homeTab === 'auto' ? 'on' : '', onclick: () => { homeTab = 'auto'; homeQ = ''; render(); } }, ico('car', 18), 'Auto'),
+    h('button', { type: 'button', class: homeTab === 'bolle' ? 'on' : '', onclick: () => { homeTab = 'bolle'; homeQ = ''; render(); } }, ico('file', 18), 'Bolle'));
+  const q = h('input', { type: 'search', class: 'big', autocomplete: 'off', autocapitalize: 'characters', placeholder: homeTab === 'auto' ? 'Ultime 5 cifre del telaio' : 'Cerca per numero o data', value: homeQ,
+    oninput: (e) => { homeQ = e.target.value; renderList(); } });
+  const dock = h('div', { class: 'dock' }, homeTab === 'auto'
+    ? h('button', { class: 'btn primary full lg', type: 'button', onclick: newCar }, ico('plus'), 'Nuovo scarico')
+    : h('button', { class: 'btn primary full lg', type: 'button', onclick: newBolla }, ico('camera'), 'Fotografa bolla'));
+  setTimeout(() => {
+    if (!warned) { warned = true; if (usedBytes() / CFG.QUOTA > 0.8) dialog({ title: 'Spazio quasi finito', text: 'Elimina le auto già partite per liberare spazio.', cancel: 'Ho capito' }); }
+  }, 600);
+  return [hdr, h('div', { class: 'gold' }), h('main', { class: 'main' }, storageBar(), statusEl(), seg, h('div', { class: 'sbox' }, ico('search'), q), h('div', { id: 'list' }), h('div', { class: 'sp' })), dock];
+}
+function carRow(c) {
+  const nd = S.damages.filter((d) => d.car_id === c.id).length;
+  let fired = false;
+  const el = h('div', { class: 'row', onclick: () => { if (fired) { fired = false; return; } go({ name: 'car', id: c.id }); } },
+    h('div', { class: 'thumbi' }, ico('car')),
+    h('div', { class: 'grow' },
+      h('div', { class: 'vin' }, h('span', { class: 'dim' }, c.vin.slice(0, -5)), h('b', null, c.vin.slice(-5))),
+      h('div', { class: 's' }, fmt(c.created_at) + ' · ' + (nd ? nd + (nd === 1 ? ' danno' : ' danni') : 'nessun danno'))),
+    statoChip(c.status), c._dirty ? h('span', { class: 'dot', title: 'Da sincronizzare' }) : null);
+  longpress(el, () => { fired = true; carMenu(c); });
+  return el;
+}
+function bollaRow(b) {
+  const np = S.photos.filter((p) => p.bolla_id === b.id).length;
+  const nc = S.cars.filter((c) => c.bolla_id === b.id && !c.deleted_at).length;
+  let fired = false;
+  const el = h('div', { class: 'row', onclick: () => { if (fired) { fired = false; return; } go({ name: 'bolla', id: b.id }); } },
+    h('div', { class: 'thumbi' }, ico('file')),
+    h('div', { class: 'grow' }, h('div', { class: 't' }, bollaName(b)), h('div', { class: 's' }, fmt(b.created_at) + ' · ' + np + (np === 1 ? ' foto' : ' foto') + (nc ? ' · ' + nc + ' auto' : ''))),
+    b.numero ? null : chip('in attesa', 'warn'), b._dirty && b.numero ? h('span', { class: 'dot' }) : null);
+  longpress(el, () => { fired = true; bollaMenu(b); });
+  return el;
+}
+function renderList() {
+  const box = $('#list'); if (!box) return;
+  box.textContent = '';
+  const q = homeQ.toUpperCase().replace(/\s/g, '');
+  if (homeTab === 'auto') {
+    let rows = S.cars.filter((c) => !c.deleted_at);
+    if (q) {
+      rows = rows.filter((c) => c.vin.toUpperCase().includes(q));
+      rows.sort((a, b) => (b.vin.endsWith(q) ? 1 : 0) - (a.vin.endsWith(q) ? 1 : 0) || (a.created_at < b.created_at ? 1 : -1));
+      if (!rows.length) { box.append(h('p', { class: 'empty' }, 'Nessuna auto con "' + q + '".')); return; }
+    } else {
+      rows.sort((a, b) => (a.created_at < b.created_at ? 1 : -1)); rows = rows.slice(0, 30);
+      if (!rows.length) { box.append(h('p', { class: 'empty' }, 'Nessuna auto in archivio. Tocca "Nuovo scarico" per iniziare.')); return; }
+      box.append(h('p', { class: 'lbl' }, 'Ultime scaricate'));
+    }
+    rows.forEach((c) => box.append(carRow(c)));
+  } else {
+    let rows = S.bolle.filter((b) => !b.deleted_at).sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
+    const qq = homeQ.trim().toLowerCase();
+    if (qq) rows = rows.filter((b) => (bollaName(b) + ' ' + fmt(b.created_at)).toLowerCase().includes(qq));
+    if (!rows.length) { box.append(h('p', { class: 'empty' }, qq ? 'Nessuna bolla trovata.' : 'Nessuna bolla. Tocca "Fotografa bolla".')); return; }
+    rows.slice(0, 60).forEach((b) => box.append(bollaRow(b)));
+  }
+}
+
+/* ---------- report: condivisione ---------- */
+async function makeReport(kind, item) {
+  const wait = overlay(h('div', { class: 'dlg' }, h('h3', null, 'Preparo il PDF…'), h('p', null, 'Con tante foto può servire qualche secondo.')), 'center', () => {});
+  let doc;
+  try { doc = kind === 'car' ? await carReportDoc(item) : await bollaReportDoc(item); }
+  catch (e) { wait.close(); dialog({ title: 'PDF non creato', text: String(e.message || e), cancel: 'Chiudi' }); return; }
+  wait.close();
+  const name = kind === 'car' ? 'Scheda ' + item.vin + ' - ' + fmtFile(new Date().toISOString()) + '.pdf' : bollaFile(item);
+  const file = new File([doc.output('blob')], name, { type: 'application/pdf' });
+  const download = () => { const a = h('a', { href: URL.createObjectURL(file), download: name }); document.body.append(a); a.click(); a.remove(); toast('PDF salvato nel telefono'); };
+  await dialog({ title: 'Report pronto', text: name, cancel: 'Chiudi', extra: [
+    { label: 'Condividi (WhatsApp, email…)', fn: async () => {
+      try {
+        if (navigator.canShare && navigator.canShare({ files: [file] })) await navigator.share({ files: [file], title: name });
+        else download();
+      } catch (e) { if (e.name !== 'AbortError') download(); }
+    } },
+    { label: 'Salva nel telefono', fn: download }
+  ] });
+}
+
+/* ---------- auto ---------- */
+function newDraft() { return { vin: '', vinEdited: false, telaio: null, telaioURL: '', generale: null, generaleURL: '', ocr: '', ddt: '', note: '', bollaId: '', damages: [] }; }
+function newCar() { draft = newDraft(); go({ name: 'newCar' }); takeTelaio(); }
+async function takeTelaio() {
+  const f = await pickPhoto(); if (!f || !draft) return;
+  try {
+    const pr = await prepPhoto(f);
+    draft.telaio = pr.blob; draft.telaioURL = URL.createObjectURL(pr.blob); draft.ocr = 'busy';
+    if (view.name === 'newCar') render();
+    try {
+      const v = await readVin(pr.canvas);
+      if (v && !draft.vinEdited) draft.vin = v;
+      draft.ocr = v ? 'ok' : 'fail';
+    } catch (e) { draft.ocr = 'fail'; }
+  } catch (e) { toast('Foto non riuscita, riprova.'); }
+  if (draft && view.name === 'newCar') render();
+}
+async function takeGenerale() {
+  const f = await pickPhoto(); if (!f || !draft) return;
+  try { const pr = await prepPhoto(f); draft.generale = pr.blob; draft.generaleURL = URL.createObjectURL(pr.blob); } catch (e) { toast('Foto non riuscita, riprova.'); }
+  if (view.name === 'newCar') render();
+}
+function bollaSelect(val, onch) {
+  const sel = h('select', { onchange: (e) => onch(e.target.value) }, h('option', { value: '' }, 'Nessuna bolla'),
+    S.bolle.filter((b) => !b.deleted_at).sort((a, b) => (a.created_at < b.created_at ? 1 : -1)).slice(0, 40).map((b) => h('option', { value: b.id }, bollaName(b) + ' - ' + fmt(b.created_at))));
+  sel.value = val || ''; return sel;
+}
+function field(label, el) { return h('label', { class: 'fld' }, h('span', null, label), el); }
+function slot(label, url, fn) {
+  return h('button', { class: 'slot' + (url ? ' has' : ''), type: 'button', onclick: fn }, url ? h('img', { src: url, alt: '' }) : [ico('camera', 26), h('span', null, label)], url ? h('span', { class: 'phl' }, 'Rifai foto') : null);
+}
+function newCarScreen() {
+  if (!draft) draft = newDraft();
+  const vinIn = h('input', { type: 'text', class: 'vinin', autocapitalize: 'characters', autocomplete: 'off', spellcheck: 'false', value: draft.vin, placeholder: 'Telaio',
+    oninput: (e) => { draft.vin = e.target.value.toUpperCase(); draft.vinEdited = true; cnt.textContent = draft.vin.replace(/[^A-Z0-9]/g, '').length + '/17'; } });
+  const cnt = h('span', { class: 'cnt' }, draft.vin.replace(/[^A-Z0-9]/g, '').length + '/17');
+  const hint = draft.ocr === 'busy' ? 'Leggo il telaio dalla foto…' : draft.ocr === 'ok' ? 'Letto dalla foto: controlla e correggi.' : draft.ocr === 'fail' ? 'Non riesco a leggerlo: scrivilo a mano.' : '';
+  const dmg = draft.damages.map((d, i) => h('div', { class: 'row' }, h('div', { class: 'thumbi warn' }, ico('alert')),
+    h('div', { class: 'grow', onclick: () => editor({ title: 'Danno', note: d.note, blobs: d.blobs.slice(), onDone: (x) => { d.note = x.note; d.blobs = x.blobs; render(); } }) },
+      h('div', { class: 't' }, d.note || 'Danno senza nota'), h('div', { class: 's' }, d.blobs.length + ' foto')),
+    h('button', { class: 'ib', type: 'button', 'aria-label': 'Togli danno', onclick: () => { draft.damages.splice(i, 1); render(); } }, ico('x'))));
+  return [header({ back: true, title: 'Nuovo scarico' }), h('div', { class: 'gold' }), h('main', { class: 'main' },
+    h('p', { class: 'lbl' }, 'Foto del telaio'), slot('Inquadra il telaio', draft.telaioURL, takeTelaio),
+    field('Telaio', h('div', { class: 'vinrow' }, vinIn, cnt)), hint ? h('p', { class: 'hint' }, hint) : null,
+    h('p', { class: 'lbl' }, 'Foto dell\'auto'), slot('Vista generale', draft.generaleURL, takeGenerale),
+    h('p', { class: 'lbl' }, 'Danni'), dmg,
+    h('button', { class: 'btn full', type: 'button', onclick: () => editor({ title: 'Nuovo danno', note: '', blobs: [], onDone: (x) => { draft.damages.push({ note: x.note, blobs: x.blobs }); render(); } }) }, ico('alert'), 'C\'è un danno'),
+    h('p', { class: 'lbl' }, 'Altri dati (facoltativi)'),
+    field('Bolla collegata', bollaSelect(draft.bollaId, (v) => { draft.bollaId = v; })),
+    field('DDT / dati bisarca', h('input', { type: 'text', value: draft.ddt, oninput: (e) => { draft.ddt = e.target.value; } })),
+    field('Note', h('textarea', { rows: 3, oninput: (e) => { draft.note = e.target.value; } }, draft.note)),
+    h('div', { class: 'sp' })),
+    h('div', { class: 'dock' }, h('button', { class: 'btn primary full lg', type: 'button', onclick: saveDraft }, ico('check'), 'Salva auto'))];
+}
+async function saveDraft() {
+  const vin = draft.vin.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (vin.length < 5) return toast('Scrivi il telaio (almeno 5 caratteri).');
+  if (!draft.telaio) return toast('Manca la foto del telaio.');
+  if (!draft.generale) return toast('Manca la foto dell\'auto.');
+  if (S.cars.some((c) => !c.deleted_at && c.vin === vin)) {
+    const r = await dialog({ title: 'Telaio già presente', text: 'Esiste già un\'auto con il telaio ' + vin + '. Salvare comunque?', ok: 'Salva comunque' });
+    if (!r.ok) return;
+  }
+  const car = { id: uid(), vin, status: 'arrivata', note: draft.note || null, ddt: draft.ddt || null, bolla_id: draft.bollaId || null };
+  stamp(car, true); await save('cars', car);
+  await addPhoto(draft.telaio, 'telaio', { car_id: car.id });
+  await addPhoto(draft.generale, 'generale', { car_id: car.id });
+  for (const d of draft.damages) {
+    const dm = { id: uid(), car_id: car.id, note: d.note || null }; stamp(dm, true); await save('damages', dm);
+    for (const b of d.blobs) await addPhoto(b, 'danno', { car_id: car.id, damage_id: dm.id });
+  }
+  draft = null; homeTab = 'auto'; homeQ = '';
+  back(); toast('Auto salvata'); sync();
+}
+function carMenu(c) {
+  sheet(c.vin, [
+    { label: 'Modifica', icon: 'edit', fn: () => go({ name: 'editCar', id: c.id }) },
+    { label: 'Invia report', icon: 'share', fn: () => makeReport('car', c) },
+    { label: 'Elimina auto', icon: 'trash', danger: true, fn: () => deleteCar(c) }
+  ]);
+}
+async function deleteCar(c) {
+  const l5 = c.vin.slice(-5);
+  const r = await dialog({ title: 'Elimina auto', text: 'Finisce nel cestino per ' + CFG.TRASH_DAYS + ' giorni, poi sparisce con le sue foto. Per confermare scrivi le ultime 5 cifre: ' + l5, input: true, caps: true, ok: 'Elimina', danger: true,
+    validate: (v) => v.toUpperCase().trim() === l5.toUpperCase(), invalid: 'Le cifre non corrispondono.',
+    extra: [{ label: 'Invia il report prima', fn: () => makeReport('car', c) }] });
+  if (!r.ok) return;
+  c.deleted_at = new Date().toISOString(); stamp(c, false); await save('cars', c);
+  if (view.name === 'car') back(); else refreshView();
+  toast('Auto nel cestino'); sync();
+}
+function carScreen() {
+  const c = S.cars.find((x) => x.id === view.id);
+  if (!c) return [header({ back: true, title: 'Auto' }), h('main', { class: 'main' }, h('p', { class: 'empty' }, 'Auto non trovata.'))];
+  const bolla = c.bolla_id ? S.bolle.find((b) => b.id === c.bolla_id) : null;
+  const ph = S.photos.filter((p) => p.car_id === c.id && !p.damage_id).sort((a, b) => (a.kind === 'telaio' ? -1 : b.kind === 'telaio' ? 1 : (a.created_at < b.created_at ? -1 : 1)));
+  const dm = S.damages.filter((d) => d.car_id === c.id).sort((a, b) => (a.created_at < b.created_at ? -1 : 1));
+  const meta = [
+    h('div', null, 'Scaricata il ' + fmt(c.created_at) + (c.created_by_name ? ' da ' + c.created_by_name : '')),
+    c.updated_at ? h('div', null, 'Modificata il ' + fmt(c.updated_at) + (c.updated_by_name ? ' da ' + c.updated_by_name : '')) : null,
+    c.ddt ? h('div', null, 'DDT / bisarca: ' + c.ddt) : null,
+    bolla ? h('div', null, 'Bolla: ', h('a', { href: '#', class: 'lnk', onclick: (e) => { e.preventDefault(); go({ name: 'bolla', id: bolla.id }); } }, bollaName(bolla))) : null,
+    c.note ? h('div', { class: 'note' }, c.note) : null];
+  return [header({ back: true, title: '...' + c.vin.slice(-5), right: menuBtn(() => carMenu(c)) }), h('div', { class: 'gold' }), h('main', { class: 'main' },
+    h('div', { class: 'card' }, h('div', { class: 'vinbig' }, c.vin),
+      h('div', { class: 'strow' }, h('button', { class: 'stb', type: 'button', onclick: () => sheet('Stato auto', STATI.map((s) => ({ label: s, fn: async () => { c.status = s; stamp(c, false); await save('cars', c); render(); sync(); } }))) }, statoChip(c.status), h('span', { class: 'dim' }, 'cambia')), c._dirty ? chip('da sincronizzare', 'warn') : null),
+      h('div', { class: 'meta' }, meta)),
+    h('p', { class: 'lbl' }, 'Foto'),
+    h('div', { class: 'grid' }, ph.map((p) => thumb(p, labelKind(p), () => viewer(p)))),
+    h('button', { class: 'btn full', type: 'button', onclick: async () => {
+      const f = await pickPhoto(); if (!f) return;
+      try { const pr = await prepPhoto(f); await addPhoto(pr.blob, 'generale', { car_id: c.id }); render(); sync(); } catch (e) { toast('Foto non riuscita'); }
+    } }, ico('camera'), 'Aggiungi foto'),
+    h('p', { class: 'lbl' }, 'Danni (' + dm.length + ')'),
+    dm.length ? dm.map((d) => {
+      const np = S.photos.filter((p) => p.damage_id === d.id).length;
+      return h('div', { class: 'row', onclick: () => editor({ title: 'Danno', d, car: c }) }, h('div', { class: 'thumbi warn' }, ico('alert')),
+        h('div', { class: 'grow' }, h('div', { class: 't' }, d.note || 'Danno senza nota'), h('div', { class: 's' }, np + ' foto · ' + fmt(d.created_at))));
+    }) : h('p', { class: 'empty small' }, 'Nessun danno segnalato.'),
+    h('button', { class: 'btn full', type: 'button', onclick: () => editor({ title: 'Nuovo danno', note: '', blobs: [], onDone: async (x) => {
+      const d = { id: uid(), car_id: c.id, note: x.note || null }; stamp(d, true); await save('damages', d);
+      for (const b of x.blobs) await addPhoto(b, 'danno', { car_id: c.id, damage_id: d.id });
+      render(); sync();
+    } }) }, ico('alert'), 'Aggiungi danno'),
+    h('div', { class: 'sp' })),
+    h('div', { class: 'dock' }, h('button', { class: 'btn primary full lg', type: 'button', onclick: () => makeReport('car', c) }, ico('share'), 'Invia report'))];
+}
+function editCarScreen() {
+  const c = S.cars.find((x) => x.id === view.id);
+  if (!c) return [header({ back: true, title: 'Modifica' }), h('main', { class: 'main' }, h('p', { class: 'empty' }, 'Auto non trovata.'))];
+  const f = { vin: c.vin, status: c.status, ddt: c.ddt || '', note: c.note || '', bolla: c.bolla_id || '' };
+  const st = h('select', { onchange: (e) => { f.status = e.target.value; } }, STATI.map((s) => h('option', { value: s }, s))); st.value = f.status;
+  return [header({ back: true, title: 'Modifica auto' }), h('div', { class: 'gold' }), h('main', { class: 'main' },
+    field('Telaio', h('input', { type: 'text', class: 'vinin', value: f.vin, autocapitalize: 'characters', oninput: (e) => { f.vin = e.target.value.toUpperCase(); } })),
+    field('Stato', st), field('Bolla collegata', bollaSelect(f.bolla, (v) => { f.bolla = v; })),
+    field('DDT / dati bisarca', h('input', { type: 'text', value: f.ddt, oninput: (e) => { f.ddt = e.target.value; } })),
+    field('Note', h('textarea', { rows: 4, oninput: (e) => { f.note = e.target.value; } }, f.note)), h('div', { class: 'sp' })),
+    h('div', { class: 'dock' }, h('button', { class: 'btn primary full lg', type: 'button', onclick: async () => {
+      const vin = f.vin.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (vin.length < 5) return toast('Telaio troppo corto.');
+      c.vin = vin; c.status = f.status; c.ddt = f.ddt || null; c.note = f.note || null; c.bolla_id = f.bolla || null;
+      stamp(c, false); await save('cars', c); back(); toast('Modifiche salvate'); sync();
+    } }, ico('check'), 'Salva modifiche'))];
+}
+
+/* ---------- editor danno ---------- */
+function editor(o) {
+  const isNew = !o.d;
+  let note = isNew ? (o.note || '') : (o.d.note || '');
+  let blobs = isNew ? (o.blobs || []).slice() : [];
+  const grid = h('div', { class: 'grid' });
+  const ta = h('textarea', { rows: 3, placeholder: 'Dove e che danno (es. paraurti ant. destro, graffio)', oninput: (e) => { note = e.target.value; } }, note);
+  const draw = () => {
+    grid.textContent = '';
+    if (isNew) blobs.forEach((b, i) => {
+      const img = h('img', { src: URL.createObjectURL(b), alt: '' });
+      grid.append(h('button', { class: 'ph', type: 'button', onclick: async () => { const r = await dialog({ title: 'Togli foto', ok: 'Togli', danger: true }); if (r.ok) { blobs.splice(i, 1); draw(); } } }, img));
+    });
+    else S.photos.filter((p) => p.damage_id === o.d.id).forEach((p) => grid.append(thumb(p, '', () => viewer(p))));
+  };
+  draw();
+  const add = h('button', { class: 'btn full', type: 'button', onclick: async () => {
+    const f = await pickPhoto(); if (!f) return;
+    try {
+      const pr = await prepPhoto(f);
+      if (isNew) blobs.push(pr.blob); else { await addPhoto(pr.blob, 'danno', { car_id: o.d.car_id, damage_id: o.d.id }); sync(); }
+      draw();
+    } catch (e) { toast('Foto non riuscita'); }
+  } }, ico('camera'), 'Aggiungi foto');
+  let ov;
+  const saveBtn = h('button', { class: 'btn primary', type: 'button', onclick: async () => {
+    if (isNew) { ov.close(); await o.onDone({ note: note.trim(), blobs }); }
+    else { o.d.note = note.trim() || null; stamp(o.d, false); await save('damages', o.d); ov.close(); render(); sync(); }
+  } }, 'Salva');
+  const del = isNew ? null : h('button', { class: 'btn danger', type: 'button', onclick: async () => {
+    const r = await dialog({ title: 'Elimina danno', text: 'Il danno e le sue foto vengono eliminati.', ok: 'Elimina', danger: true });
+    if (r.ok) { ov.close(); await deleteDamage(o.d); render(); }
+  } }, 'Elimina');
+  ov = overlay(h('div', { class: 'sheet tall' }, h('div', { class: 'sh-t' }, o.title), ta, grid, add, h('div', { class: 'dbtn' }, del, h('button', { class: 'btn', type: 'button', onclick: () => ov.close() }, 'Chiudi'), saveBtn)), 'bottom');
+}
+
+/* ---------- bolle ---------- */
+async function newBolla() {
+  const f = await pickPhoto(); if (!f) return;
+  try {
+    const pr = await prepPhoto(f);
+    const b = { id: uid(), note: null }; stamp(b, true); await save('bolle', b);
+    await addPhoto(pr.blob, 'bolla', { bolla_id: b.id });
+    go({ name: 'bolla', id: b.id }); sync();
+  } catch (e) { toast('Foto non riuscita, riprova.'); }
+}
+function bollaMenu(b) {
+  sheet(bollaName(b), [
+    { label: 'Modifica nota', icon: 'edit', fn: async () => {
+      const r = await dialog({ title: 'Nota bolla', input: true, textarea: true, value: b.note || '', ok: 'Salva' });
+      if (r.ok) { b.note = r.value.trim() || null; stamp(b, false); await save('bolle', b); refreshView(); sync(); }
+    } },
+    { label: 'Collega auto', icon: 'car', fn: () => linkCars(b) },
+    { label: 'Invia report', icon: 'share', fn: () => makeReport('bolla', b) },
+    { label: 'Elimina bolla', icon: 'trash', danger: true, fn: async () => {
+      const r = await dialog({ title: 'Elimina bolla', text: 'Finisce nel cestino per ' + CFG.TRASH_DAYS + ' giorni.', ok: 'Elimina', danger: true,
+        extra: [{ label: 'Invia il report prima', fn: () => makeReport('bolla', b) }] });
+      if (!r.ok) return;
+      b.deleted_at = new Date().toISOString(); stamp(b, false); await save('bolle', b);
+      if (view.name === 'bolla') back(); else refreshView();
+      toast('Bolla nel cestino'); sync();
+    } }
+  ]);
+}
+function linkCars(b) {
+  const cars = S.cars.filter((c) => !c.deleted_at).sort((a, c) => (a.created_at < c.created_at ? 1 : -1)).slice(0, 25);
+  sheet('Tocca per collegare o scollegare', cars.map((c) => ({ label: (c.bolla_id === b.id ? '✓ ' : '') + c.vin, fn: async () => {
+    c.bolla_id = c.bolla_id === b.id ? null : b.id; stamp(c, false); await save('cars', c); refreshView(); sync(); linkCars(b);
+  } })));
+}
+function bollaScreen() {
+  const b = S.bolle.find((x) => x.id === view.id);
+  if (!b) return [header({ back: true, title: 'Bolla' }), h('main', { class: 'main' }, h('p', { class: 'empty' }, 'Bolla non trovata.'))];
+  const ph = S.photos.filter((p) => p.bolla_id === b.id).sort((a, c) => (a.created_at < c.created_at ? -1 : 1));
+  const cars = S.cars.filter((c) => c.bolla_id === b.id && !c.deleted_at);
+  return [header({ back: true, title: bollaName(b), right: menuBtn(() => bollaMenu(b)) }), h('div', { class: 'gold' }), h('main', { class: 'main' },
+    h('div', { class: 'card' }, h('div', { class: 'meta' },
+      h('div', null, fmt(b.created_at) + (b.created_by_name ? ' · ' + b.created_by_name : '')),
+      b.updated_at ? h('div', null, 'Modificata il ' + fmt(b.updated_at) + (b.updated_by_name ? ' da ' + b.updated_by_name : '')) : null,
+      b.numero ? null : chip('Prende il numero alla sincronizzazione', 'warn'),
+      b.note ? h('div', { class: 'note' }, b.note) : null)),
+    h('p', { class: 'lbl' }, 'Foto'), h('div', { class: 'grid' }, ph.map((p) => thumb(p, '', () => viewer(p)))),
+    h('button', { class: 'btn full', type: 'button', onclick: async () => {
+      const f = await pickPhoto(); if (!f) return;
+      try { const pr = await prepPhoto(f); await addPhoto(pr.blob, 'bolla', { bolla_id: b.id }); render(); sync(); } catch (e) { toast('Foto non riuscita'); }
+    } }, ico('camera'), 'Aggiungi foto'),
+    h('p', { class: 'lbl' }, 'Auto collegate (' + cars.length + ')'), cars.length ? cars.map(carRow) : h('p', { class: 'empty small' }, 'Nessuna auto collegata.'),
+    h('button', { class: 'btn full', type: 'button', onclick: () => linkCars(b) }, ico('car'), 'Collega auto'), h('div', { class: 'sp' })),
+    h('div', { class: 'dock' }, h('button', { class: 'btn primary full lg', type: 'button', onclick: () => makeReport('bolla', b) }, ico('share'), 'Invia report'))];
+}
+
+/* ---------- cestino ---------- */
+function trashScreen() {
+  const left = (iso) => Math.max(0, Math.ceil((new Date(iso).getTime() + CFG.TRASH_DAYS * 864e5 - Date.now()) / 864e5));
+  const items = [].concat(
+    S.cars.filter((c) => c.deleted_at).map((c) => ({ t: 'cars', r: c, name: c.vin })),
+    S.bolle.filter((b) => b.deleted_at).map((b) => ({ t: 'bolle', r: b, name: bollaName(b) })));
+  items.sort((a, b) => (a.r.deleted_at < b.r.deleted_at ? 1 : -1));
+  return [header({ back: true, title: 'Cestino' }), h('div', { class: 'gold' }), h('main', { class: 'main' },
+    h('p', { class: 'hint' }, 'Gli elementi restano ' + CFG.TRASH_DAYS + ' giorni, poi vengono eliminati con le foto.'),
+    items.length ? items.map((it) => h('div', { class: 'row' }, h('div', { class: 'thumbi' }, ico(it.t === 'cars' ? 'car' : 'file')),
+      h('div', { class: 'grow' }, h('div', { class: 't' }, it.name), h('div', { class: 's' }, 'Eliminata il ' + fmt(it.r.deleted_at) + ' · ancora ' + left(it.r.deleted_at) + ' gg')),
+      h('button', { class: 'btn', type: 'button', onclick: async () => { it.r.deleted_at = null; stamp(it.r, false); await save(it.t, it.r); render(); toast('Ripristinata'); sync(); } }, 'Ripristina')))
+      : h('p', { class: 'empty' }, 'Il cestino è vuoto.'))];
+}
+
+/* ---------- disegno schermate ---------- */
+function render() {
+  const a = app(); if (!a) return;
+  a.textContent = '';
+  let parts;
+  if (!session || view.name === 'login') { parts = [loginScreen()]; }
+  else if (view.name === 'car') parts = carScreen();
+  else if (view.name === 'newCar') parts = newCarScreen();
+  else if (view.name === 'editCar') parts = editCarScreen();
+  else if (view.name === 'bolla') parts = bollaScreen();
+  else if (view.name === 'trash') parts = trashScreen();
+  else parts = homeScreen();
+  parts.forEach((p) => a.append(p));
+  if (view.name === 'home' && session) renderList();
+}
+
+/* ---------- avvio ---------- */
+(async function init() {
+  try { await dbOpen(); await loadAll(); }
+  catch (e) { document.body.textContent = 'Archivio del telefono non disponibile: ' + e.message; return; }
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+  if (!session) view = { name: 'login' };
+  else if (history.state && history.state.name && history.state.name !== 'login') view = history.state;
+  history.replaceState(view, '');
+  render();
+  const sp = $('#splash'); if (sp) setTimeout(() => { sp.classList.add('out'); setTimeout(() => sp.remove(), 400); }, 900);
+  if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+  sync();
+  window.addEventListener('online', sync);
+  window.addEventListener('offline', paintStatus);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) sync(); });
+  setInterval(() => { if (!document.hidden) sync(); }, 60000);
+})();
+
+</script>
+</body>
+</html>
